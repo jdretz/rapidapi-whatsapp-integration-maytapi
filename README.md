@@ -1,3 +1,19 @@
+**The project assumes you have already followed the steps in the article to set up your phone and integrate it with the Api.
+
+1. Once cloned, add a .env file with the variable REACT_APP_RAPIDAPI_KEY that has the value of your rapid api key.
+2. Hard code your phone_id value into the url located in sendMessage.js.
+3. You will need to add your rapid api key to the top of sendMessage.js (inside of headers variable) or import it with environment variable. 
+4. run `npm install` in the project root
+5. run `netlify dev` to start the development server
+
+
+
+
+
+-------------------------------------------------------
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
