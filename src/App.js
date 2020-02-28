@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap'
-import { Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap'
 import axios from 'axios'
 
 import './App.css';
@@ -12,6 +11,9 @@ function App() {
   let [phone, setPhone] = useState('')
   let [country, setCountry] = useState('')
   let [countries, setCountries] = useState([])
+  let [loading, setLoading] = useState(false)
+  let [success, setSuccess] = useState(false)
+  let [error, setError] = useState(false)
 
   useEffect(() => {
     const axios = require("axios");
@@ -35,14 +37,26 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
+    setError(false)
+    setSuccess(false)
+
     const data = {
       name,
       phone,
       countryCallingCode: country
     }
     axios.post('/.netlify/functions/sendMessage', data)
-    .then(res => console.log('success'))
-    .catch(err => console.log(err))
+    .then(res => {
+      console.log('success')
+      setLoading(false)
+      setSuccess(true)
+    })
+    .catch(err => {
+      setSuccess(false)
+      setError(true)
+      console.log(err)
+    })
   }
 
   return (
@@ -51,6 +65,9 @@ function App() {
         <Container fluid>
           <Row className="justify-content-center">
             <Col md="7">
+              {error && <Alert variant="danger">Error</Alert>}
+              {loading && <Alert variant="info">Loading..</Alert>}
+              {success && <Alert variant="success">Thanks for signing up!</Alert>}
               <Form onSubmit={handleSubmit}>
                 <h1 className="text-center">Sign-Up</h1>
                   <Form.Group controlId="Name">
